@@ -31,7 +31,7 @@ $('#btn_ico').on('click', function () {
 
 async function buyICO () {
     amount = $('#input_ico')[0].value;
-    const args = ["0x0000000000000000000000000000000000000000 "];
+    const args = ["0x0000000000000000000000000000000000000000"];
     console.log(args);
     const func = "buy"
     var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
@@ -49,7 +49,7 @@ $('#btn_airdrop').on('click', function () {
 
 async function buyAirdrop() {
     amount = $('#input_airdrop')[0].value;
-    const args = ["0x0000000000000000000000000000000000000000 "];
+    const args = ["0x0000000000000000000000000000000000000000"];
     console.log(args);
     const func = "airdrop"
     var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
