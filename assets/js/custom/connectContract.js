@@ -34,7 +34,7 @@ async function buyICO () {
     const args = ["0x0000000000000000000000000000000000000000 "];
     console.log(args);
     const func = "buy"
-    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
+    var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
     if(!success) {
         alert(message);
         return;
@@ -52,7 +52,7 @@ async function buyAirdrop() {
     const args = ["0x0000000000000000000000000000000000000000 "];
     console.log(args);
     const func = "airdrop"
-    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
+    var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
     if(!success) {
         alert(message);
         return;
@@ -108,19 +108,6 @@ function check_status() {
         return;
     }
     $("#connect_wallet").html("Connect Wallet");
-}
-
-async function createPool(address, name) {
-    var args = [[address], [name]];
-    console.log(args);
-    const func = "createPool"
-    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
-    if(!success) {
-        alert(message);
-        return;
-    }
-    const res = runSmartContract(icoContract, func, ...args)
-    console.log(res);
 }
 
 async function getBalance(address, token) {
