@@ -31,7 +31,7 @@ $('#btn_ico').on('click', function () {
 
 async function buyICO () {
     amount = $('#input_ico')[0].value;
-    const args = [{value: web3.utils.toWei(amount)}];
+    const args = ["0x0000000000000000000000000000000000000000 "];
     console.log(args);
     const func = "buy"
     var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
@@ -39,7 +39,7 @@ async function buyICO () {
         alert(message);
         return;
     }
-    const res = runSmartContract(icoContract, func, ...args)
+    const res = runSmartContract(icoContract, func, web3.utils.toWei(amount), ...args)
     console.log(res);
 }
 
@@ -49,7 +49,7 @@ $('#btn_airdrop').on('click', function () {
 
 async function buyAirdrop() {
     amount = $('#input_airdrop')[0].value;
-    const args = [{value: web3.utils.toWei(amount)}];
+    const args = ["0x0000000000000000000000000000000000000000 "];
     console.log(args);
     const func = "airdrop"
     var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
@@ -57,7 +57,7 @@ async function buyAirdrop() {
         alert(message);
         return;
     }
-    const res = runSmartContract(icoContract, func, ...args)
+    const res = runSmartContract(icoContract, func, web3.utils.toWei(amount), ...args)
     console.log(res);
 }
 
@@ -153,16 +153,16 @@ async function callSmartContract(contract, func, ...args) {
     return contract.methods[func](...args).call();
 }
 
-async function runSmartContract(contract, func, ...args) {
+async function runSmartContract(contract, func, value, ...args) {
     if(accounts.length == 0) return false;
     if(!contract) return false;
     if(!contract.methods[func]) return false;
-    return await contract.methods[func](...args).send({ from: accounts[0] })
+    return await contract.methods[func](...args).send({ from: accounts[0], value: value })
 }
 
-async function estimateGas(contract, func, ...args) {
+async function estimateGas(contract, func, value, ...args) {
     try {
-        const gasAmount = await contract.methods[func](...args).estimateGas({from: accounts[0]});
+        const gasAmount = await contract.methods[func](...args).estimateGas({from: accounts[0], value: value});
         return {
             success: true,
             gas: gasAmount
