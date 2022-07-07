@@ -75,7 +75,7 @@ function connect_wallet() {
             check_status();
         })
         .catch(error => {
-            console.error(error);
+            console.log(error);
         })
 }
 
@@ -89,7 +89,7 @@ function switch_network() {
             check_status();
         })
         .catch((error) => {
-            console.error(error);
+            console.log(error);
         })
 }
 
