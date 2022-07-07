@@ -1,13 +1,12 @@
 var web3;
 var accounts = [];
-var networkChainId = '0x13881';
-var vestingContract;
+var networkChainId = '0x61';
+var icoContract;
 var tokenContract;
-var polygonscan_address = 'https://mumbai.polygonscan.com/address/';
+var testbscscan_address = 'https://testnet.bscscan.com/address/';
 var myAddress = "";
 
-let contract_address = "0x483da03A27c05b641609AE6c7d040558B582db03";
-
+let contract_address = "0x97f6257520Edc5fDedA4e455Af1f5c6804dbAC07";
 
 const owner_address = "0xF62F51CE6191c17380A64d49C58D1206Cd091410";
 const toastElement = document.getElementById('kt_docs_toast_toggle');
@@ -24,6 +23,48 @@ $(document).on('click', '#connect_wallet', function() {
     } else if($('#connect_wallet')[0].innerHTML == "Switch network")  {
         switch_network();
     }
+})
+
+$('#btn_ico').on('click', function () {
+    amount = $('#input_ico').value;
+    const args = [{value: web3.toWei(amount)}];
+    console.log(args);
+    const func = "buy"
+    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
+    if(!success) {
+        alert(message);
+        return;
+    }
+    const res = runSmartContract(icoContract, func, ...args)
+    console.log(res);
+})
+
+$('#btn_ico').on('click', function () {
+    amount = $('#input_ico').value;
+    const args = [{value: web3.toWei(amount)}];
+    console.log(args);
+    const func = "buy"
+    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
+    if(!success) {
+        alert(message);
+        return;
+    }
+    const res = runSmartContract(icoContract, func, ...args)
+    console.log(res);
+})
+
+$('#btn_airdrop').on('click', function () {
+    amount = $('#input_airdrop').value;
+    const args = [{value: web3.toWei(amount)}];
+    console.log(args);
+    const func = "airdrop"
+    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
+    if(!success) {
+        alert(message);
+        return;
+    }
+    const res = runSmartContract(icoContract, func, ...args)
+    console.log(res);
 })
 
 function connect_wallet() {
@@ -79,12 +120,12 @@ async function createPool(address, name) {
     var args = [[address], [name]];
     console.log(args);
     const func = "createPool"
-    var {success, gas, message}  = await estimateGas(vestingContract, func, ...args);
+    var {success, gas, message}  = await estimateGas(icoContract, func, ...args);
     if(!success) {
         alert(message);
         return;
     }
-    const res = runSmartContract(vestingContract, func, ...args)
+    const res = runSmartContract(icoContract, func, ...args)
     console.log(res);
 }
 
@@ -172,6 +213,8 @@ async function initWeb3() {
     })
 
     check_status();
+
+    icoContract = new web3.eth.Contract(icoABI, contract_address);
 }
 
 function getDateString(timestamp) {
