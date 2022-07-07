@@ -214,7 +214,7 @@ const tokenABI = [
 
 
 
-const contractABI = [
+const icoABI = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
