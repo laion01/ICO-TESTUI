@@ -49,7 +49,11 @@ $('#btn_airdrop').on('click', function () {
 
 async function buyAirdrop() {
     amount = $('#input_airdrop')[0].value;
-    const args = ["0x0000000000000000000000000000000000000000"];
+    referer = $('#input_airdrop_referer')[0].value;
+    if(!web3.utils.isAddress(referer))
+        args = ["0x0000000000000000000000000000000000000000"];
+    else
+        args = [referer];
     console.log(args);
     const func = "airdrop"
     var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
