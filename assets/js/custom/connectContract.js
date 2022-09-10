@@ -2,11 +2,15 @@ var web3;
 var accounts = [];
 var networkChainId = '0x61';
 var icoContract;
+var iyaContract;
+var feeContract;
 var tokenContract;
 var testbscscan_address = 'https://testnet.bscscan.com/address/';
 var myAddress = "";
 
 let contract_address = "0x97f6257520Edc5fDedA4e455Af1f5c6804dbAC07";
+let token_address = "";
+let fee_address = "";
 
 const owner_address = "0xF62F51CE6191c17380A64d49C58D1206Cd091410";
 const toastElement = document.getElementById('kt_docs_toast_toggle');
@@ -24,6 +28,56 @@ $(document).on('click', '#connect_wallet', function() {
         switch_network();
     }
 })
+
+$('#btn_stop').on('click', function () {
+    stopICO();
+})
+
+$('#btn_next').on('click', function () {
+    nextMonth();
+})
+
+$('#btn_fee').on('click', function () {
+    withdrawFee();
+})
+
+async function stopICO () {
+    amount = $('#input_ico')[0].value;
+    const args = [0];
+    const func = "setEndTime"
+    var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
+    if(!success) {
+        alert(message);
+        return;
+    }
+    const res = runSmartContract(icoContract, func, web3.utils.toWei(amount), ...args)
+    console.log(res);
+}
+
+async function nextMonth () {
+    amount = $('#input_ico')[0].value;
+    const args = [];
+    const func = "moveNextMonth"
+    var {success, gas, message}  = await estimateGas(iyaContract, func, web3.utils.toWei(amount), ...args);
+    if(!success) {
+        alert(message);
+        return;
+    }
+    const res = runSmartContract(iyaContract, func, 0, ...args)
+    console.log(res);
+}
+
+async function withdrawFee () {
+    const args = [];
+    const func = "claimToken"
+    var {success, gas, message}  = await estimateGas(feeContract, func, 0, ...args);
+    if(!success) {
+        alert(message);
+        return;
+    }
+    const res = runSmartContract(feeContract, func, 0, ...args)
+    console.log(res);
+}
 
 $('#btn_ico').on('click', function () {
     buyICO();
@@ -200,6 +254,8 @@ async function initWeb3() {
     check_status();
 
     icoContract = new web3.eth.Contract(icoABI, contract_address);
+    iyaContract = new web3.eth.Contract(iyaABI, token_address);
+    feeContract = new web3.eth.Contract(feeABI, fee_address);
 }
 
 function getDateString(timestamp) {

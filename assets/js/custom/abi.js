@@ -1,3 +1,6 @@
+const iyaABI = [];
+const feeABI = [];
+
 const tokenABI = [
   {
     "inputs": [],
