@@ -1,4 +1,4 @@
-var web3;
+let web3;
 var accounts = [];
 var networkChainId = '0x61';
 var icoContract;
@@ -21,7 +21,7 @@ function toastMsg(str) {
     toast.show();
 }
 
-$(document).on('click', '#connect_wallet', function() {
+$('#connect_wallet').on('click', function () {
     if($('#connect_wallet')[0].innerHTML == "Connect Wallet") {
         connect_wallet();
     } else if($('#connect_wallet')[0].innerHTML == "Switch network")  {
@@ -123,6 +123,7 @@ function connect_wallet() {
     return web3.eth.requestAccounts()
         .then(_accounts => {
             accounts = _accounts;
+            console.log("Network Chain Id", web3.currentProvider.chainId);
             if (web3.currentProvider.chainId != networkChainId) {
                 console.log("wrong network");
                 myAddress = '';
