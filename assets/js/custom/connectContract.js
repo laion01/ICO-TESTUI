@@ -56,7 +56,7 @@ async function stopICO () {
 async function nextMonth () {
     const args = [];
     const func = "moveNextMonth"
-    var {success, gas, message}  = await estimateGas(iyaContract, 0, ...args);
+    var {success, gas, message}  = await estimateGas(iyaContract, func, 0, ...args);
     if(!success) {
         alert(message);
         return;
