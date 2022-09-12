@@ -42,23 +42,21 @@ $('#btn_fee').on('click', function () {
 })
 
 async function stopICO () {
-    amount = $('#input_ico')[0].value;
     const args = [0];
     const func = "setEndTime"
-    var {success, gas, message}  = await estimateGas(icoContract, func, web3.utils.toWei(amount), ...args);
+    var {success, gas, message}  = await estimateGas(icoContract, func, 0, ...args);
     if(!success) {
         alert(message);
         return;
     }
-    const res = runSmartContract(icoContract, func, web3.utils.toWei(amount), ...args)
+    const res = runSmartContract(icoContract, func, 0, ...args)
     console.log(res);
 }
 
 async function nextMonth () {
-    amount = $('#input_ico')[0].value;
     const args = [];
     const func = "moveNextMonth"
-    var {success, gas, message}  = await estimateGas(iyaContract, func, web3.utils.toWei(amount), ...args);
+    var {success, gas, message}  = await estimateGas(iyaContract, 0, ...args);
     if(!success) {
         alert(message);
         return;
