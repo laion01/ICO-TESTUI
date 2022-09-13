@@ -112,7 +112,7 @@ $('#btn_total_amount').on('click', function() {
 })
 
 function shortenNumber(astr) {
-    const list = String(str).split('.');
+    const list = String(astr).split('.');
     if(list.length == 1) {
         return list[0];
     } else {
