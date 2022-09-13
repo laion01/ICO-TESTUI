@@ -8,9 +8,9 @@ var tokenContract;
 var testbscscan_address = 'https://testnet.bscscan.com/address/';
 var myAddress = "";
 
-let contract_address = "0x798c1b36a511f1128d33C4a61Bf617ca7B87dcF5";
-let token_address = "0x73A5d0066341880B4215D0b44c415ED59f067133";
-let fee_address = "0x541bCB8592277315623b13B3718DeeeeE691a143";
+let contract_address = "0xbcDF913E6150cB26Ff6AAd18ab4E8B35ea935684";
+let token_address = "0xefc25b70CA735A7F5d8faabFd5109ed4bf512F9A";
+let fee_address = "0xe7cb9f170774143D42c9F905514D97F73fB6DBD3";
 
 const owner_address = "0xF62F51CE6191c17380A64d49C58D1206Cd091410";
 const toastElement = document.getElementById('kt_docs_toast_toggle');
