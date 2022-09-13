@@ -8,9 +8,9 @@ var tokenContract;
 var testbscscan_address = 'https://testnet.bscscan.com/address/';
 var myAddress = "";
 
-let contract_address = "0xC612cFb20dFf7129b832cCc4fb112656fBCdcCfd";
-let token_address = "0x809d86CbC83E7fb1670244A52D935394AE3644fE";
-let fee_address = "0x499130754b456b00Bcad2F830D544919A8658628";
+let contract_address = "0xe01ad8e92963967D31A52014C3195a5A13Ab137B";
+let token_address = "0xBC2623df40dd3cbCE75F03DA4EB6cB07A031D035";
+let fee_address = "0xBbD88C3D1bD352e58c8c8ea9FC73601c175002B9";
 
 const owner_address = "0xF62F51CE6191c17380A64d49C58D1206Cd091410";
 const toastElement = document.getElementById('kt_docs_toast_toggle');
@@ -111,9 +111,21 @@ $('#btn_total_amount').on('click', function() {
     displayTotalAmount();
 })
 
+function shortenNumber(astr) {
+    const list = String(str).split('.');
+    if(list.length == 1) {
+        return list[0];
+    } else {
+        let maxLen = 3;
+        if(list[1].length < 3)
+            maxLen = list[1].length;
+        return list[0] + list[1].substring(0, maxLen);
+    }
+}
+
 async function displayMyBalance() {
     const balance = await getBalance(accounts[0], token_address);
-    $('#btn_mbalance').html("My Balance " + Web3.utils.fromWei(balance));
+    $('#btn_mbalance').html("My Balance " + shortenNumber(Web3.utils.fromWei(balance)));
 }
 
 async function displayTotalAmount() {
@@ -122,7 +134,7 @@ async function displayTotalAmount() {
     console.log(Date(1000 * cm));
     const amount = await tokenContract.methods.totalAmount(cm).call();
     console.log(amount);
-    $('#btn_total_amount').html("My Total " + Web3.utils.fromWeb(amount));
+    $('#btn_total_amount').html("My Total " + shortenNumber(Web3.utils.fromWei(amount)));
 }
 
 async function displayFeeAmount() {
@@ -131,7 +143,7 @@ async function displayFeeAmount() {
     console.log(Date(1000 * cm));
     const amount = await tokenContract.methods.feeHistory(cm).call();
     console.log(amount);
-    $('#btn_fee_amount').html("Total Fee " + Web3.utils.fromWei(amount));
+    $('#btn_fee_amount').html("Total Fee " + shortenNumber(Web3.utils.fromWei(amount)));
 }
 
 
