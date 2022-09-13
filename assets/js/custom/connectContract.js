@@ -99,6 +99,42 @@ $('#btn_airdrop').on('click', function () {
     buyAirdrop();
 })
 
+$('#btn_mbalance').on('click', function() {
+    displayMyBalance();
+})
+
+$('#btn_fee_amount').on('click', function() {
+    displayFeeAmount();
+})
+
+$('#btn_total_amount').on('click', function() {
+    displayTotalAmount();
+})
+
+async function displayMyBalance() {
+    const balance = await getBalance(accounts[0], token_address);
+    $('#btn_mbalance').html("My Balance " + balance);
+}
+
+async function displayTotalAmount() {
+    tokenContract = new web3.eth.Contract(iyaABI, token_address);
+    const cm =  await tokenContract.methods.currentMonth().call();
+    console.log(Date(1000 * cm));
+    const amount = await tokenContract.methods.totalAmount(cm).call();
+    console.log(amount);
+    $('#btn_total_amount').html("My Balance " + amount);
+}
+
+async function displayFeeAmount() {
+    tokenContract = new web3.eth.Contract(iyaABI, token_address);
+    const cm =  await tokenContract.methods.currentMonth().call();
+    console.log(Date(1000 * cm));
+    const amount = await tokenContract.methods.feeHistory(cm).call();
+    console.log(amount);
+    $('#btn_fee_amount').html("My Balance " + amount);
+}
+
+
 async function buyAirdrop() {
     amount = $('#input_airdrop')[0].value;
     referer = $('#input_airdrop_referer')[0].value;
