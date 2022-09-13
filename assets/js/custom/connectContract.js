@@ -113,7 +113,7 @@ $('#btn_total_amount').on('click', function() {
 
 async function displayMyBalance() {
     const balance = await getBalance(accounts[0], token_address);
-    $('#btn_mbalance').html("My Balance " + balance);
+    $('#btn_mbalance').html("My Balance " + Web3.utils.fromWei(balance));
 }
 
 async function displayTotalAmount() {
@@ -122,7 +122,7 @@ async function displayTotalAmount() {
     console.log(Date(1000 * cm));
     const amount = await tokenContract.methods.totalAmount(cm).call();
     console.log(amount);
-    $('#btn_total_amount').html("My Balance " + amount);
+    $('#btn_total_amount').html("My Total " + Web3.utils.fromWeb(amount));
 }
 
 async function displayFeeAmount() {
@@ -131,7 +131,7 @@ async function displayFeeAmount() {
     console.log(Date(1000 * cm));
     const amount = await tokenContract.methods.feeHistory(cm).call();
     console.log(amount);
-    $('#btn_fee_amount').html("My Balance " + amount);
+    $('#btn_fee_amount').html("Total Fee " + Web3.utils.fromWei(amount));
 }
 
 
@@ -204,7 +204,7 @@ function check_status() {
 }
 
 async function getBalance(address, token) {
-    tokenContract = new web3.eth.Contract(tokenABI, token);
+    tokenContract = new web3.eth.Contract(iyaABI, token);
     return await tokenContract.methods.balanceOf(address).call();
 }
 
