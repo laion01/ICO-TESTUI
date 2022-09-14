@@ -131,19 +131,23 @@ async function displayMyBalance() {
 async function displayTotalAmount() {
     tokenContract = new web3.eth.Contract(iyaABI, token_address);
     const cm =  await tokenContract.methods.currentMonth().call();
+    const nm =  await tokenContract.methods.nextMonth().call();
     console.log(Date(1000 * cm));
     const amount = await tokenContract.methods.totalAmount(cm).call();
+    const amount1 = await tokenContract.methods.totalAmount(nm).call();
     console.log(amount);
-    $('#btn_total_amount').html("My Total " + shortenNumber(Web3.utils.fromWei(amount)));
+    $('#btn_total_amount').html("My Total " + shortenNumber(Web3.utils.fromWei(amount)) + "/"  + shortenNumber(Web3.utils.fromWei(amount1)));
 }
 
 async function displayFeeAmount() {
     tokenContract = new web3.eth.Contract(iyaABI, token_address);
     const cm =  await tokenContract.methods.currentMonth().call();
+    const nm =  await tokenContract.methods.nextMonth().call();
     console.log(Date(1000 * cm));
     const amount = await tokenContract.methods.feeHistory(cm).call();
+    const amount1 = await tokenContract.methods.feeHistory(nm).call();
     console.log(amount);
-    $('#btn_fee_amount').html("Total Fee " + shortenNumber(Web3.utils.fromWei(amount)));
+    $('#btn_fee_amount').html("Total Fee " + shortenNumber(Web3.utils.fromWei(amount)) + "/" +  + shortenNumber(Web3.utils.fromWei(amount1)));
 }
 
 
